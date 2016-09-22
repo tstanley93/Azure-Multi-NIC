@@ -5,7 +5,7 @@
     "resourceGroupName": {
       "type": "string",
       "metadata": {
-        "description": "The Resource Group Name that contains the Virtual Network."
+        "description": "The Resource Group Name that contains the Virtual Network that will be external."
       }
     },
     "vnetName": {
@@ -16,14 +16,12 @@
     },
     "externalSubnetName": {
       "type": "string",
-      "defaultValue": "trusted",
       "metadata": {
         "description": "Name of first subnet - with External Acccess to Internet."
       }
     },
     "internalSubnetName": {
       "type": "string",
-      "defaultValue": "websubnet",
       "metadata": {
         "description": "Name of internal Subnet for UDR, NOT the subnet with the Servers in it."
       }
@@ -74,15 +72,13 @@
   },
   "variables": {
     "vnetID": "[resourceId(parameters('resourceGroupName'),'Microsoft.Network/virtualNetworks',parameters('vnetName'))]",
-    "subnet-id1": "[concat(variables('vnetID'),'/subnets/',parameters('externalSubnetName'))]",
-    "subnet-id2": "[concat(variables('vnetID'),'/subnets/',parameters('internalSubnetName'))]",
+    "subnet-idExternal": "[concat(variables('vnetID'),'/subnets/',parameters('externalSubnetName'))]",
+    "subnet-idInternal": "[concat(variables('vnetID'),'/subnets/',parameters('internalSubnetName'))]",
     "externalNICNamePrefix": "[concat(parameters('f5Name'),'-externalnic')]",
     "udrNICNamePrefix": "[concat(parameters('f5Name'),'-udrnic')]",
     "f5publicIPName": "[concat(parameters('f5Name'),'-IP')]",
     "newStorageAccountName": "[concat(parameters('f5Name'),'store')]",
-    "publicIPID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('f5publicIPName'))]",
-    "CustomScript2ScriptFileName": "CustomScript2.sh",
-    "CustomScript2ScriptFilePath": "[concat('Documents/CustomScripts/', variables('CustomScript2ScriptFileName'))]"
+    "publicIPID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('f5publicIPName'))]"
   },
   "resources": [
     {
@@ -135,7 +131,7 @@
               "privateIPAllocationMethod": "Static",
               "privateIPAddress": "[parameters('externalIPAddress')]",
               "subnet": {
-                "id": "[variables('subnet-id1')]"
+                "id": "[variables('subnet-idExternal')]"
               }
             }
           }
@@ -159,7 +155,7 @@
               "privateIPAllocationMethod": "Static",
               "privateIPAddress": "[parameters('internalIPAddress')]",
               "subnet": {
-                "id": "[variables('subnet-id2')]"
+                "id": "[variables('subnet-idInternal')]"
               }
             }
           }
