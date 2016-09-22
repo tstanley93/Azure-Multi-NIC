@@ -29,6 +29,7 @@
       <Visible>False</Visible>
     </None>
     <Content Include="azuredeploy.json" />
+    <None Include="README.md" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>
