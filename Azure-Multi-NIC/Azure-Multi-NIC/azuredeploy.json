@@ -224,5 +224,15 @@
         }
       }
     }
-  ]
+  ],
+  "outputs": {
+    "GUI-URL": {
+      "type": "string",
+      "value": "[concat('https://',reference(variables('publicIPID')).dnsSettings.fqdn)]"
+    },
+    "SSH-URL": {
+      "type": "string",
+      "value": "[concat(reference(variables('publicIPID')).dnsSettings.fqdn)]"
+    }
+  }
 }
