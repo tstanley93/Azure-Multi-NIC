@@ -30,6 +30,8 @@
     </None>
     <Content Include="azuredeploy.json" />
     <None Include="README.md" />
+    <None Include="rg_01.jpg" />
+    <None Include="rg_02.jpg" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>

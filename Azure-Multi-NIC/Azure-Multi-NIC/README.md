@@ -1,5 +1,5 @@
 # Azure Mulit-NIC BIG-IP
-Deploy a Multi-NIC BIG-IP in Azure  
+Deploy a Multi-NIC BIG-IP into Azure  
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftstanley93%2FAzure-Multi-NIC%2Fmaster%2FAzure-Multi-NIC%2FAzure-Multi-NIC%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
@@ -10,79 +10,62 @@ This template will deploy a F5 BIG-IP into Azure with 2 network interfaces.  Thi
 
 ### Parameter Definitions: ###
 
-* location
+* resourceGroupName
   * Required
-  * Choose the data center you want to install these Web Applicatin Firewall's into from the drop down list.
-* numberOFWAFs
+  * The Resource Group Name that contains the Virtual Network that you are connecting the BIG-IP to.
+* vnetName
   * Required
-  * The number of Web Applicatin Firewall's (Up to 4) that will be deployed infront of your application.
-* vmSize
+  * The Name of the virtual network that you are connecting the BIG-IP to.
+* externalSubnetName
   * Required
-  * Choose the size of the Virtual Machine Instance from the list.
+  * "Name of first subnet - with External Acccess to Internet.
+* internalSubnetName
+  * Required
+  * Name of internal Subnet for UDR, NOT the subnet with the Servers in it.
+* f5Name
+  * Required
+  * The Unique Name of the BIG-IP instance, that will be used for the Public DNS Name of the Public IP.
+* f5Size
+  * Required
+  * The size of the BIG-IP Instance.
+* externalIPAddress
+  * Required
+  * The IP address of the new BIG-IP
+* internalIPAdress
+  * Required
+  * The IP address of the new BIG-IP
 * adminUsername
   * Required
-  * User name to login to the Web Applicatin Firewall.
+  * User name to login to the BIG-IP.
 * adminPassword
   * Required
-  * Password to login to the Web Applicatin Firewall.
-* dnsNameForPublicIP
-  * Required
-  * Unique DNS Name for the Public IP used to access the Web Application Firewalls for management.
-* licenseToken1
-  * Required
-  * The License Token for the first BYOL F5 Web Application Firewall.
-* licenseToken2
-  * Optional
-  * The License Token for the first BYOL F5 Web Application Firewall.
-  * Use only if you need more than one.
-* licenseToken3
-  * Optional
-  * The License Token for the first BYOL F5 Web Application Firewall.
-  * Use only if you need more than one.
-* licenseToken4
-  * Optional
-  * The License Token for the first BYOL F5 Web Application Firewall.
-  * Use only if you need more than one.
-* applicationName
-  * Required
-  * Please provide a simple name for your application.
-* applicationProtocols
-  * Required
-  * A semi-colon separated list of protocols (http;https) that will be used to configure the WAF's VIP's, (e.g. http for port 80 and https for SSL).
-* applicationAddress
-  * Required
-  * The public IP address or DNS FQDN of the Application that this WAF is for.
-* applicationPorts
-  * Required
-  * A semi-colon separated list of ports, (80;443) that your applicaiton is listening on, (e.g. 80 and 443).
-* applicationType
-  * Required
-  * Select the operating system that your application is running on. (Linux OS or a Windows OS)
-* blockingLevel
-  * Required
-  * Please select how aggressive you would like the blocking level of this WAF to be.  Remember that the more aggressive the blocking level, the more potential there is for false-positives that the WAF might detect.
-* applicationFQDN
-  * Required
-  * The Fully Qualified Domain Name of your application. (e.g. www.example.com).
-* applicationCertificate
-  * Optional
-  * The path to the SSL certificate file.
-* applicationKey
-  * Optional
-  * The path to the SSL key file.
-* applicationChain
-  * Optional
-  * The path to the SSL chain file.
+  * Password to login to the BIG-IP.
+
 
 
 ### What get's deployed:
 
-This template will create a new resource group, and inside this new resource group it will configure the following;
+This template will deploy the following inside of either a new resource group or an existing one depending on what you select;
 
 * Storage Container
 * Public IP Address
 * NIC objects for the F5 BIG-IP VM.
 * F5 BIG-IP Virtual Machine
+
+### During Deployment
+During Deployment there are “TWO” references to a resource group.  One is:
+ 
+<img src="" />
+
+And gives you the opportunity to create new or use an existing.  This is the Resource Group where the BIG-IP’s and all of their supporting objects will be placed.
+
+There is also:
+
+<img src="" /> 
+
+This is where you specify the name of the resource group that contains the Virtual Network and Subnets that you want to connect the BIG-IP’s to.  The template will use this value to specify the correct URI to find the Virtual Network inside of your subscription.
+
+
 
 ### How to connect to your Web Application Firewalls to manage them:
 
