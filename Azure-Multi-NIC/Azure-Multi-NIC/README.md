@@ -53,7 +53,7 @@ This template will deploy the following inside of either a new resource group or
 * F5 BIG-IP Virtual Machine
 
 ### During Deployment
-During Deployment there are ìTWOî references to a resource group.  One is:
+During Deployment there are ‚ÄúTWO‚Äù references to a resource group.  One is:
  
 <img src="https://raw.githubusercontent.com/tstanley93/Azure-Multi-NIC/master/Azure-Multi-NIC/Azure-Multi-NIC/rg_01.jpg" />
 
@@ -61,7 +61,7 @@ And gives you the opportunity to create new or use an existing.  This is the Res
 
 There is also:
 
-<img src="https://raw.githubusercontent.com/tstanley93/Azure-Multi-NIC/master/Azure-Multi-NIC/Azure-Multi-NIC/rg_02.jpg" /> 
+![rg_02](rg_02.jpg)
 
 This is where you specify the name of the resource group that contains the Virtual Network and Subnets that you want to connect the BIG-IP's to.  The template will use this value to specify the correct URI to find the Virtual Network inside of your subscription.
 
