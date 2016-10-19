@@ -55,7 +55,7 @@ This template will deploy the following inside of either a new resource group or
 ### During Deployment
 During Deployment there are “TWO” references to a resource group.  One is:
  
-<img src="https://raw.githubusercontent.com/tstanley93/Azure-Multi-NIC/master/Azure-Multi-NIC/Azure-Multi-NIC/rg_01.jpg" />
+![rg_01](rg_01.jpg)
 
 And gives you the opportunity to create new or use an existing.  This is the Resource Group where the BIG-IP's and all of their supporting objects will be placed.
 
