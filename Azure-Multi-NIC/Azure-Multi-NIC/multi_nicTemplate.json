@@ -1,0 +1,121 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vnetResourceGroupName": {
+      "type": "string",
+      "metadata": {
+        "description": "The Resource Group Name that contains the Virtual Network that will be external."
+      }
+    },
+    "vnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "The Name of the existing virtual network that you want to connect the BIG-IP's to."
+      }
+    },
+    "externalSubnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of first subnet - with External Acccess to Internet."
+      }
+    },
+    "internalSubnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of internal Subnet for UDR, NOT the subnet with the Servers in it."
+      }
+    },
+    "f5Name": {
+      "type": "string",
+      "defaultValue": "bigip",
+      "metadata": {
+        "description": "The Unique Name of the BIG-IP instance, that will be used for the Public DNS Name of the Public IP."
+      }
+    },
+    "numberOFBIGIPs": {
+      "type": "int",
+      "defaultValue": 2,
+      "metadata": {
+        "description": "The total number of BIG-IP's (Up to 4) you want to deploy."
+      },
+      "allowedValues": [
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  },
+  "variables": {
+    "vnetID": "[resourceId(parameters('vnetResourceGroupName'),'Microsoft.Network/virtualNetworks',parameters('vnetName'))]",
+    "subnet-idExternal": "[concat(variables('vnetID'),'/subnets/',parameters('externalSubnetName'))]",
+    "subnet-idInternal": "[concat(variables('vnetID'),'/subnets/',parameters('internalSubnetName'))]",
+    "externalNICNamePrefix": "[concat(parameters('f5Name'),'-externalnic')]",
+    "udrNICNamePrefix": "[concat(parameters('f5Name'),'-udrnic')]",
+    "f5publicIPName": "[concat(parameters('f5Name'),'-IP')]",
+    "publicIPID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('f5publicIPName'))]"
+  },
+  "resources": [
+    {
+      "apiVersion": "2015-05-01-preview",
+      "tags": {
+        "displayName": "External NIC"
+      },
+      "copy": {
+        "count": "[parameters('numberOFBIGIPs')]",
+        "name": "niccopy"
+      },
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[concat(variables('externalNICNamePrefix'), copyIndex())]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[variables('publicIPID')]"
+      ],
+      "properties": {
+        "enableIPForwarding": true,
+        "ipConfigurations": [
+          {
+            "name": "ipconfig",
+            "properties": {
+              "publicIPAddress": {
+                "id": "[variables('publicIPID')]"
+              },
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "[variables('subnet-idExternal')]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2015-05-01-preview",
+      "tags": {
+        "displayName": "UDR NIC"
+      },
+      "copy": {
+        "count": "[parameters('numberOFBIGIPs')]",
+        "name": "niccopy"
+      },
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[concat(variables('udrNICNamePrefix'), copyIndex())]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "enableIPForwarding": true,
+        "ipConfigurations": [
+          {
+            "name": "ipconfig",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "[variables('subnet-idInternal')]"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

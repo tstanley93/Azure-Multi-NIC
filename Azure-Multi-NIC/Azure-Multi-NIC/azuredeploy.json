@@ -2,7 +2,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "resourceGroupName": {
+    "vnetResourceGroupName": {
       "type": "string",
       "metadata": {
         "description": "The Resource Group Name that contains the Virtual Network that will be external."
@@ -11,7 +11,7 @@
     "vnetName": {
       "type": "string",
       "metadata": {
-        "description": "The Name of the virtual network"
+        "description": "The Name of the existing virtual network that you want to connect the BIG-IP's to."
       }
     },
     "externalSubnetName": {
@@ -45,16 +45,35 @@
         "description": "The size of the BIG-IP Instance."
       }
     },
-    "externalIPAddress": {
-      "type": "string",
+    "numberOFBIG-IPs": {
+      "type": "int",
+      "defaultValue": 2,
       "metadata": {
-        "Description": "The IP address of the new BIGIP"
+        "description": "The total number of BIG-IP's (Up to 4) you want to deploy."
+      },
+      "allowedValues": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "additionalInterfaces": {
+      "type": "bool",
+      "defaultValue": false,
+      "allowedValues": [
+        "true",
+        "false"
+      ],
+      "metadata": {
+        "description": "Do you want to deploy more than the default 2 interfaces?  Note: The total number of interfaces is dependant on the VM Instance Size that you have chosen."
       }
     },
-    "internalIPAddress": {
-      "type": "string",
+    "numberOfAdditionalInterfaces": {
+      "type": "int",
+      "defaultValue": 0,
       "metadata": {
-        "Description": "The IP address of the new BIGIP"
+        "description": "By default two interfaces are deployed.  If the VM instance that you have chosen supports more than two, you can specify the additional number of NIC's here.  So if you can have 4, you would specify 2 here.  Zero, means only 2 NIC's will be deployed."
       }
     },
     "adminUsername": {
@@ -71,16 +90,34 @@
     }
   },
   "variables": {
-    "vnetID": "[resourceId(parameters('resourceGroupName'),'Microsoft.Network/virtualNetworks',parameters('vnetName'))]",
+    "vnetID": "[resourceId(parameters('vnetResourceGroupName'),'Microsoft.Network/virtualNetworks',parameters('vnetName'))]",
     "subnet-idExternal": "[concat(variables('vnetID'),'/subnets/',parameters('externalSubnetName'))]",
     "subnet-idInternal": "[concat(variables('vnetID'),'/subnets/',parameters('internalSubnetName'))]",
+    "avsetNamePrefix": "[concat(parameters('f5Name'),'-avset')]",
     "externalNICNamePrefix": "[concat(parameters('f5Name'),'-externalnic')]",
     "udrNICNamePrefix": "[concat(parameters('f5Name'),'-udrnic')]",
     "f5publicIPName": "[concat(parameters('f5Name'),'-IP')]",
     "newStorageAccountName": "[concat(parameters('f5Name'),'store')]",
-    "publicIPID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('f5publicIPName'))]"
+    "publicIPID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('f5publicIPName'))]",
+    "nicHash": {
+      "false": "[concat()]",
+      "true": "[concat()]"
+    }
   },
   "resources": [
+    {
+      "name": "[variables('avsetNamePrefix')]",
+      "tags": {
+        "displayName": "Availability Set"
+      },
+      "type": "Microsoft.Compute/availabilitySets",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-05-01-preview",
+      "properties": {
+        "platformUpdateDomainCount": 1,
+        "platformFaultDomainCount": 1
+      }
+    },
     {
       "name": "[variables('newStorageAccountName')]",
       "tags": {
@@ -109,57 +146,19 @@
       }
     },
     {
-      "apiVersion": "2015-05-01-preview",
-      "tags": {
-        "displayName": "External NIC"
-      },
-      "type": "Microsoft.Network/networkInterfaces",
-      "name": "[variables('externalNICNamePrefix')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[variables('publicIPID')]"
-      ],
+      "apiVersion": "2015-01-01",
+      "name": "NICTemplate",
+      "type": "Microsoft.Resources/deployments",
       "properties": {
-        "enableIPForwarding": true,
-        "ipConfigurations": [
-          {
-            "name": "ipconfig",
-            "properties": {
-              "publicIPAddress": {
-                "id": "[variables('publicIPID')]"
-              },
-              "privateIPAllocationMethod": "Static",
-              "privateIPAddress": "[parameters('externalIPAddress')]",
-              "subnet": {
-                "id": "[variables('subnet-idExternal')]"
-              }
-            }
-          }
-        ]
-      }
-    },
-    {
-      "apiVersion": "2015-05-01-preview",
-      "tags": {
-        "displayName": "UDR NIC"
-      },
-      "type": "Microsoft.Network/networkInterfaces",
-      "name": "[variables('udrNICNamePrefix')]",
-      "location": "[resourceGroup().location]",
-      "properties": {
-        "enableIPForwarding": true,
-        "ipConfigurations": [
-          {
-            "name": "ipconfig",
-            "properties": {
-              "privateIPAllocationMethod": "Static",
-              "privateIPAddress": "[parameters('internalIPAddress')]",
-              "subnet": {
-                "id": "[variables('subnet-idInternal')]"
-              }
-            }
-          }
-        ]
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/tstanley93/OpenCart-WAF/master/OpenCart-WAF/openCartInfrastructureTemplate.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "namePrefix": { "value": "[parameters('namePrefix')]" },
+          "location": { "value": "[parameters('location')]" }
+        }
       }
     },
     {
@@ -173,7 +172,8 @@
       "dependsOn": [
         "[concat('Microsoft.Network/networkInterfaces/',variables('externalNICNamePrefix'))]",
         "[concat('Microsoft.Network/networkInterfaces/',variables('udrNICNamePrefix'))]",
-        "[concat('Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]"
+        "[concat('Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]",
+        "[concat('Microsoft.Compute/availabilitySets/', variables('avsetNamePrefix'))]"
       ],
       "plan": {
         "name": "f5-bigip-virtual-edition-best-byol",
@@ -182,6 +182,9 @@
 
       },
       "properties": {
+        "availabilitySet": {
+          "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('avsetNamePrefix'))]"
+        },
         "hardwareProfile": {
           "vmSize": "[parameters('f5Size')]"
         },
@@ -221,6 +224,12 @@
               }
             }
           ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": true,
+            "storageUri": "[concat('http://',variables('newstorageAccountName'),'.blob.core.windows.net')]"
+          }
         }
       }
     }
