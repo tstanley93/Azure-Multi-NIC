@@ -45,6 +45,13 @@
         3,
         4
       ]
+    },
+    "numberOfAdditionalInterfaces": {
+      "type": "int",
+      "defaultValue": 0,
+      "metadata": {
+        "description": "By default two interfaces are deployed.  If the VM instance that you have chosen supports more than two, you can specify the additional number of NIC's here.  So if you can have 4, you would specify 2 here.  Zero, means only 2 NIC's will be deployed."
+      }
     }
   },
   "variables": {
@@ -53,6 +60,7 @@
     "subnet-idInternal": "[concat(variables('vnetID'),'/subnets/',parameters('internalSubnetName'))]",
     "externalNICNamePrefix": "[concat(parameters('f5Name'),'-externalnic')]",
     "udrNICNamePrefix": "[concat(parameters('f5Name'),'-udrnic')]",
+    "additionNICNamePrefix": "[concat(parameters('f5Name'),'-nic')]",
     "f5publicIPName": "[concat(parameters('f5Name'),'-IP')]",
     "publicIPID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('f5publicIPName'))]"
   },
@@ -116,6 +124,19 @@
           }
         ]
       }
+    },
+    {
+      "apiVersion": "2015-05-01-preview",
+      "tags": {
+        "displayName": "Additional NIC"
+      },
+      "copy": {
+        "count": "[parameters('numberOfAdditionalInterfaces')]",
+        "name": "niccopy"
+      },
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[concat(variables('additionNICNamePrefix'), copyIndex(2))]",
+      "location": "[resourceGroup().location]"
     }
   ]
 }
