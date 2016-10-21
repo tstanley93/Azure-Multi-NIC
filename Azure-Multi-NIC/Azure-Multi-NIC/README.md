@@ -1,16 +1,16 @@
 # Azure Mulit-NIC BIG-IP
 Deploy a Multi-NIC BIG-IP into Azure  
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftstanley93%2FAzure-Multi-NIC%2Fmaster%2FAzure-Multi-NIC%2FAzure-Multi-NIC%2Fazuredeploy.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftstanley93%2FAzure-Multi-NIC%2FMulti-BIG-IP%2FAzure-Multi-NIC%2FAzure-Multi-NIC%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
 ### Description:
-This template will deploy a F5 BIG-IP into Azure with 2 network interfaces.  This template could be modified for additional NIC's as needed.
+This template will allow you to deploy more than one F5 BIG-IP into Azure with 2 or more network interfaces.  Remember that the total number of interfaces that can be deployed is predicated on the number of NIC objects supported by the underlying Virtual Instance Size.  If you choose to deploy on an instance size that only supports 2 NIC's for example but you request that 4 NIC's be cretaed from this template, then template deployment will fail.  Please see this [link](https://azure.microsoft.com/en-us/documentation/articles/virtual-machines-windows-sizes/#size-tables) to determine the Virtual Instances Sizes and the number of NIC's that are supported.
 
 ### Parameter Definitions: ###
 
-* resourceGroupName
+* vnetResourceGroupName
   * Required
   * The Resource Group Name that contains the Virtual Network that you are connecting the BIG-IP to.
 * vnetName
@@ -28,12 +28,18 @@ This template will deploy a F5 BIG-IP into Azure with 2 network interfaces.  Thi
 * f5Size
   * Required
   * The size of the BIG-IP Instance.
-* externalIPAddress
+* multipleBIGIPs
   * Required
-  * The IP address of the new BIG-IP
-* internalIPAdress
+  * If you want to deploy more than 1 BIG-IP so you can build a cluster, choose yes, if not choose no.
+* numberOFBIGIPs
   * Required
-  * The IP address of the new BIG-IP
+  * The total number of BIG-IP's (Up to 4) you want to deploy. If you chose no from above, please select 1.
+* additionalInterfaces
+  * Required
+  * If you want to deploy more than the default 2 interfaces, select yes. Note: The total number of interfaces is dependant on the VM Instance Size that you have chosen.
+* numberOfAdditionalInterfaces
+  * Required
+  * By default two interfaces are deployed with this tempalte.  If the VM instance that you have chosen supports more than two NIC objects, you can specify the additional number of NIC's here.  So if you can have 4, you would specify 2 here.  Zero, means only 2 NIC's will be deployed.
 * adminUsername
   * Required
   * User name to login to the BIG-IP.

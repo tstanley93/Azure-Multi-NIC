@@ -61,6 +61,9 @@
     "externalNICNamePrefix": "[concat(parameters('f5Name'),'-externalnic')]",
     "udrNICNamePrefix": "[concat(parameters('f5Name'),'-udrnic')]",
     "f5publicIPName": "[concat(parameters('f5Name'),'-IP')]",
+    "nsgID": "[resourceId('Microsoft.Network/networkSecurityGroups/',concat(parameters('f5Name'),'-nsg'))]",
+    "loadBalancerName": "[concat(parameters('f5Name'),'-ALB')]",
+    "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]",
     "publicIPID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('f5publicIPName'))]"
   },
   "resources": [
@@ -80,6 +83,9 @@
         "[variables('publicIPID')]"
       ],
       "properties": {
+        "networkSecurityGroup": {
+          "id": "[variables('nsgID')]"
+        },
         "enableIPForwarding": true,
         "ipConfigurations": [
           {
@@ -91,7 +97,20 @@
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
                 "id": "[variables('subnet-idExternal')]"
-              }
+              },
+              "loadBalancerBackendAddressPools": [
+                {
+                  "id": "[concat(variables('lbID'), '/backendAddressPools/', 'loadBalancerBackEnd')]"
+                }
+              ],
+              "loadBalancerInboundNatRules": [
+                {
+                  "id": "[concat(variables('lbID'), '/inboundNatRules/', 'guimgt',copyIndex())]"
+                },
+                {
+                  "id": "[concat(variables('lbID'), '/inboundNatRules/', 'sshmgt',copyIndex())]"
+                }
+              ]
             }
           }
         ]
