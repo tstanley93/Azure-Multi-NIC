@@ -47,14 +47,10 @@
     },
     "multipleBIGIPs": {
       "type": "bool",
-      "defaultValue": "Yes",
+      "defaultValue": "true",
       "metadata": {
         "description": "Do you want to deploy more than 1 BIG-IP so you can build a cluster?"
-      },
-      "allowedValues": [
-        "Yes",
-        "No"
-      ]
+      }
     },
     "numberOFBIGIPs": {
       "type": "int",
