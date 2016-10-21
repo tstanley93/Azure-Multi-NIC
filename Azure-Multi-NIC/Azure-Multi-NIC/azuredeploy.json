@@ -47,7 +47,7 @@
     },
     "multipleBIGIPs": {
       "type": "bool",
-      "defaultValue": "true",
+      "defaultValue": true,
       "metadata": {
         "description": "Do you want to deploy more than 1 BIG-IP so you can build a cluster?"
       }
@@ -68,10 +68,6 @@
     "additionalInterfaces": {
       "type": "bool",
       "defaultValue": false,
-      "allowedValues": [
-        "true",
-        "false"
-      ],
       "metadata": {
         "description": "Do you want to deploy more than the default 2 interfaces?  Note: The total number of interfaces is dependant on the VM Instance Size that you have chosen."
       }
