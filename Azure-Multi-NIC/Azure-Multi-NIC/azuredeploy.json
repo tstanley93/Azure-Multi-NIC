@@ -349,9 +349,13 @@
       "apiVersion": "2015-01-01",
       "name": "NICTemplate",
       "type": "Microsoft.Resources/deployments",
+      "copy": {
+        "name": "nicLoop",
+        "count": "[parameters('numberOFBIGIPs')]"
+      },
       "dependsOn": [
-        "[concat('Microsoft.Network/loadBalancers/inboundNatRules/',variables('loadBalancerName'),'/guimgt',0)]",
-        "[concat('Microsoft.Network/loadBalancers/inboundNatRules/',variables('loadBalancerName'),'/sshmgt',0)]",
+        "[concat('Microsoft.Network/loadBalancers/inboundNatRules/',variables('loadBalancerName'),'/guimgt',copyIndex())]",
+        "[concat('Microsoft.Network/loadBalancers/inboundNatRules/',variables('loadBalancerName'),'/sshmgt',copyIndex())]",
         "[concat('Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]",
         "[concat('Microsoft.Compute/availabilitySets/', variables('avsetNamePrefix'))]"
       ],
