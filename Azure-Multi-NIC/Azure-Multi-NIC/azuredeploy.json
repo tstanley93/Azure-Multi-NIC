@@ -350,6 +350,8 @@
       "name": "NICTemplate",
       "type": "Microsoft.Resources/deployments",
       "dependsOn": [
+        "[concat('Microsoft.Network/loadBalancers/inboundNatRules/',variables('loadBalancerName'),'/guimgt',0)]",
+        "[concat('Microsoft.Network/loadBalancers/inboundNatRules/',variables('loadBalancerName'),'/sshmgt',0)]",
         "[concat('Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]",
         "[concat('Microsoft.Compute/availabilitySets/', variables('avsetNamePrefix'))]"
       ],
