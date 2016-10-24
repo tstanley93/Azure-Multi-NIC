@@ -74,6 +74,10 @@
         "count": "[parameters('numberOFBIGIPs')]",
         "name": "niccopy"
       },
+      "dependsOn": [
+        "[concat(resourceId('Microsoft.Network/loadBalancers/inboundNatRules/',variables('loadBalancerName'),'/guimgt', copyIndex()))]",
+        "[concat(resourceId('Microsoft.Network/loadBalancers/inboundNatRules/',variables('loadBalancerName'),'/sshmgt', copyIndex()))]"
+      ],
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[concat(variables('externalNICNamePrefix'), copyIndex())]",
       "location": "[resourceGroup().location]",
