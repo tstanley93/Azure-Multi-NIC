@@ -307,7 +307,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('nicHash')[parameters('additionalInterfaces')]]",
+          "uri": "[concat(variables('templateLocationPrefix'), 'inboundNATRules.json')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
