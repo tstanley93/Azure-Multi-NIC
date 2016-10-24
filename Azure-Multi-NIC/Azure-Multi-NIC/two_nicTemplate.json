@@ -75,8 +75,8 @@
         "name": "niccopy"
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Network/loadBalancers/inboundNatRules',concat(variables('loadBalancerName'),'/guimgt', copyIndex()))]",
-        "[resourceId('Microsoft.Network/loadBalancers/inboundNatRules',concat(variables('loadBalancerName'),'/sshmgt', copyIndex()))]"
+        "[resourceId('Microsoft.Network/loadBalancers/inboundNatRules', concat(variables('loadBalancerName'),'/guimgt', copyIndex()))]",
+        "[resourceId('Microsoft.Network/loadBalancers/inboundNatRules', concat(variables('loadBalancerName'),'/sshmgt', copyIndex()))]"
       ],
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[concat(variables('externalNICNamePrefix'), copyIndex())]",
