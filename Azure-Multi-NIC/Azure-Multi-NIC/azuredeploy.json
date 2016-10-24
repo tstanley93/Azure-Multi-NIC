@@ -47,13 +47,13 @@
     },
     "multipleBIGIPs": {
       "type": "string",
-      "defaultValue": "true",
+      "defaultValue": "Yes",
       "metadata": {
         "description": "Do you want to deploy more than 1 BIG-IP so you can build a cluster?"
       },
       "allowedValues": [
-        "true",
-        "false"
+        "Yes",
+        "No"
       ]
     },
     "numberOFBIGIPs": {
@@ -71,29 +71,29 @@
     },
     "additionalInterfaces": {
       "type": "string",
-      "defaultValue": "false",
+      "defaultValue": "No",
       "metadata": {
         "description": "Do you want to deploy more than the default 2 interfaces?  Note: The total number of interfaces is dependant on the VM Instance Size that you have chosen."
       },
       "allowedValues": [
-        "true",
-        "false"
+        "Yes",
+        "No"
       ]
     },
     "numberOfAdditionalInterfaces": {
-      "type": "string",
-      "defaultValue": "0",
+      "type": "int",
+      "defaultValue": 0,
       "metadata": {
         "description": "By default two interfaces are deployed.  If the VM instance that you have chosen supports more than two, you can specify the additional number of NIC's here.  So if you can have 4, you would specify 2 here.  Zero, means only 2 NIC's will be deployed."
       },
       "allowedValues": [
-        "0",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6"
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
       ]
     },
     "adminUsername": {
@@ -126,8 +126,8 @@
     "sshMgtID": "[concat(variables('lbID'),'/inboundNatRules/sshmgt')]",
     "templateLocationPrefix": "https://raw.githubusercontent.com/tstanley93/Azure-Multi-NIC/Multi-BIG-IP/Azure-Multi-NIC/Azure-Multi-NIC/",
     "nicHash": {
-      "false": "[concat(variables('templateLocationPrefix'),'two_nicTemplate.json')]",
-      "true": "[concat(variables('templateLocationPrefix'),'multi_nicTemplate.json')]"
+      "No": "[concat(variables('templateLocationPrefix'),'two_nicTemplate.json')]",
+      "Yes": "[concat(variables('templateLocationPrefix'),'multi_nicTemplate.json')]"
     },
     "bigipHash": {
       "0": "[concat(variables('templateLocationPrefix'),'two_nic_bigip_vm.json')]",
