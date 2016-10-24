@@ -294,57 +294,7 @@
         ]
       },
       "type": "Microsoft.Network/loadBalancers"
-    },
-    {
-      "apiVersion": "2015-06-15",
-      "tags": {
-        "displayName": "GUI Inbound NAT Rule"
-      },
-      "type": "Microsoft.Network/loadBalancers/inboundNatRules",
-      "name": "[concat(variables('loadBalancerName'),'/guimgt', copyIndex())]",
-      "location": "[resourceGroup().location]",
-      "copy": {
-        "name": "lbNatLoop",
-        "count": "[parameters('numberOFBIGIPs')]"
-      },
-      "dependsOn": [
-        "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]"
-      ],
-      "properties": {
-        "frontendIPConfiguration": {
-          "id": "[variables('frontEndIPConfigID')]"
-        },
-        "protocol": "tcp",
-        "frontendPort": "[copyIndex(8443)]",
-        "backendPort": 443,
-        "enableFloatingIP": false
-      }
-    },
-    {
-      "apiVersion": "2015-06-15",
-      "tags": {
-        "displayName": "SSH Inbound NAT Rule"
-      },
-      "type": "Microsoft.Network/loadBalancers/inboundNatRules",
-      "name": "[concat(variables('loadBalancerName'),'/sshmgt', copyIndex())]",
-      "location": "[resourceGroup().location]",
-      "copy": {
-        "name": "lbNatLoop",
-        "count": "[parameters('numberOFBIGIPs')]"
-      },
-      "dependsOn": [
-        "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]"
-      ],
-      "properties": {
-        "frontendIPConfiguration": {
-          "id": "[variables('frontEndIPConfigID')]"
-        },
-        "protocol": "tcp",
-        "frontendPort": "[copyIndex(8022)]",
-        "backendPort": 22,
-        "enableFloatingIP": false
-      }
-    },
+    },    
     {
       "apiVersion": "2015-01-01",
       "name": "NICTemplate",
