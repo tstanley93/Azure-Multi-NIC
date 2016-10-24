@@ -120,8 +120,8 @@
         "name": "niccopy"
       },
       "dependsOn": [
-        "[concat(variables('loadBalancerName'),'/sshmgt', copyIndex())]",
-        "[concat(variables('loadBalancerName'),'/guimgt', copyIndex())]"
+        "[concat('Microsoft.Network/loadBalancers/inboundNatRules/', variables('loadBalancerName'),'/sshmgt', copyIndex())]",
+        "[concat('Microsoft.Network/loadBalancers/inboundNatRules/', variables('loadBalancerName'),'/guimgt', copyIndex())]"
       ],
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[concat(variables('externalNICNamePrefix'), copyIndex())]",
@@ -167,8 +167,8 @@
         "name": "niccopy"
       },
       "dependsOn": [
-        "[concat(variables('loadBalancerName'),'/sshmgt', copyIndex())]",
-        "[concat(variables('loadBalancerName'),'/guimgt', copyIndex())]"
+        "[concat('Microsoft.Network/loadBalancers/inboundNatRules/', variables('loadBalancerName'),'/sshmgt', copyIndex())]",
+        "[concat('Microsoft.Network/loadBalancers/inboundNatRules/', variables('loadBalancerName'),'/guimgt', copyIndex())]"
       ],
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[concat(variables('udrNICNamePrefix'), copyIndex())]",
