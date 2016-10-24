@@ -79,9 +79,6 @@
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[concat(variables('externalNICNamePrefix'), copyIndex())]",
       "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[variables('publicIPID')]"
-      ],
       "properties": {
         "networkSecurityGroup": {
           "id": "[variables('nsgID')]"
@@ -91,9 +88,6 @@
           {
             "name": "ipconfig",
             "properties": {
-              "publicIPAddress": {
-                "id": "[variables('publicIPID')]"
-              },
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
                 "id": "[variables('subnet-idExternal')]"
