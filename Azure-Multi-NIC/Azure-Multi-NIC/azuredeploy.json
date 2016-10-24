@@ -294,13 +294,39 @@
         ]
       },
       "type": "Microsoft.Network/loadBalancers"
-    },    
+    },
+    {
+      "apiVersion": "2015-01-01",
+      "name": "InboundNATRuleTemplate",
+      "type": "Microsoft.Resources/deployments",
+      "dependsOn": [
+        "[concat('Microsoft.Network/loadBalancers/',variables('loadBalancerName'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]",
+        "[concat('Microsoft.Compute/availabilitySets/', variables('avsetNamePrefix'))]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('nicHash')[parameters('additionalInterfaces')]]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vnetResourceGroupName": { "value": "[toLower(parameters('vnetResourceGroupName'))]" },
+          "vnetName": { "value": "[parameters('vnetName')]" },
+          "externalSubnetName": { "value": "[parameters('externalSubnetName')]" },
+          "internalSubnetName": { "value": "[parameters('internalSubnetName')]" },
+          "f5Name": { "value": "[parameters('f5Name')]" },
+          "numberOFBIGIPs": { "value": "[parameters('numberOFBIGIPs')]" },
+          "numberOfAdditionalInterfaces": { "value": "[parameters('numberOfAdditionalInterfaces')]" }
+        }
+      }
+    },
     {
       "apiVersion": "2015-01-01",
       "name": "NICTemplate",
       "type": "Microsoft.Resources/deployments",
       "dependsOn": [
-        "[concat('Microsoft.Network/loadBalancers/',variables('loadBalancerName'))]",
+        "[concat('Microsoft.Resources/deployments/','InboundNATRuleTemplate')]",
         "[concat('Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]",
         "[concat('Microsoft.Compute/availabilitySets/', variables('avsetNamePrefix'))]"
       ],
