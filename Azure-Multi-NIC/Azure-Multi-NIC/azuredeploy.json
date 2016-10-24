@@ -349,6 +349,10 @@
       "apiVersion": "2015-01-01",
       "name": "NICTemplate",
       "type": "Microsoft.Resources/deployments",
+      "dependsOn": [
+        "[concat('Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]",
+        "[concat('Microsoft.Compute/availabilitySets/', variables('avsetNamePrefix'))]"
+      ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -370,6 +374,11 @@
       "apiVersion": "2015-01-01",
       "name": "BIGIPTemplate",
       "type": "Microsoft.Resources/deployments",
+      "dependsOn": [
+        "[concat('Microsoft.Resources/deployments/','NICTemplate')]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]",
+        "[concat('Microsoft.Compute/availabilitySets/', variables('avsetNamePrefix'))]"
+      ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
