@@ -121,7 +121,12 @@
       },
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[concat(variables('additionNICNamePrefix'), copyIndex(2))]",
-      "location": "[resourceGroup().location]"
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "ipConfigurations": [
+          
+        ]
+      }
     }
   ]
 }
