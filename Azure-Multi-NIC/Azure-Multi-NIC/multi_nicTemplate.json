@@ -26,6 +26,7 @@
   },
   "variables": {
     "intAddInterfaces": "[int(parameters('numberOfAdditionalInterfaces'))]",
+    "intAddBigIPs": "[int(parameters('numberOFBIGIPs'))]",
     "vnetID": "[resourceId(parameters('vnetResourceGroupName'),'Microsoft.Network/virtualNetworks',parameters('vnetName'))]",
     "subnet-idExternal": "[concat(variables('vnetID'),'/subnets/',parameters('externalSubnetName'))]",
     "subnet-idInternal": "[concat(variables('vnetID'),'/subnets/',parameters('internalSubnetName'))]",
@@ -116,11 +117,11 @@
         "displayName": "Additional NIC"
       },
       "copy": {
-        "count": "[variables('intAddInterfaces')]",
+        "count": "[mul(variables('intAddInterfaces'),variables('intAddBigIPs'))]",
         "name": "niccopy"
       },
       "type": "Microsoft.Network/networkInterfaces",
-      "name": "[concat(variables('additionNICNamePrefix'), copyIndex(2))]",
+      "name": "[concat(variables('additionNICNamePrefix'), copyIndex(2),copyIndex())]",
       "location": "[resourceGroup().location]",
       "properties": {
         "ipConfigurations": [

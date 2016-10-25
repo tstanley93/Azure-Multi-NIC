@@ -87,19 +87,19 @@
               }
             },
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('additionNICNamePrefix'),copyIndex(2)))]",
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('additionNICNamePrefix'),copyIndex(2),copyIndex()))]",
               "properties": {
                 "primary": false
               }
             },
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('additionNICNamePrefix'),copyIndex(3)))]",
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('additionNICNamePrefix'),copyIndex(3),copyIndex()))]",
               "properties": {
                 "primary": false
               }
             },
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('additionNICNamePrefix'),copyIndex(4)))]",
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('additionNICNamePrefix'),copyIndex(4),copyIndex()))]",
               "properties": {
                 "primary": false
               }

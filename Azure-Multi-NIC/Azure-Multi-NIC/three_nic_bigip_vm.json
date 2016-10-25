@@ -87,7 +87,7 @@
               }
             },
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('additionNICNamePrefix'),copyIndex(2)))]",
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('additionNICNamePrefix'),copyIndex(2),copyIndex()))]",
               "properties": {
                 "primary": false
               }
