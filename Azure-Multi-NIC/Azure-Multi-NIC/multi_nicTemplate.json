@@ -47,14 +47,11 @@
       ]
     },
     "numberOfAdditionalInterfaces": {
-      "type": "int",
-      "defaultValue": 0,
-      "metadata": {
-        "description": "By default two interfaces are deployed.  If the VM instance that you have chosen supports more than two, you can specify the additional number of NIC's here.  So if you can have 4, you would specify 2 here.  Zero, means only 2 NIC's will be deployed."
-      }
+      "type": "string"
     }
   },
   "variables": {
+    "intAddInterfaces": "[int(parameters('numberOfAdditionalInterfaces'))]",
     "vnetID": "[resourceId(parameters('vnetResourceGroupName'),'Microsoft.Network/virtualNetworks',parameters('vnetName'))]",
     "subnet-idExternal": "[concat(variables('vnetID'),'/subnets/',parameters('externalSubnetName'))]",
     "subnet-idInternal": "[concat(variables('vnetID'),'/subnets/',parameters('internalSubnetName'))]",
@@ -145,7 +142,7 @@
         "displayName": "Additional NIC"
       },
       "copy": {
-        "count": "[parameters('numberOfAdditionalInterfaces')]",
+        "count": "[variables('intAddInterfaces')]",
         "name": "niccopy"
       },
       "type": "Microsoft.Network/networkInterfaces",
