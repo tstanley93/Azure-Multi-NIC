@@ -35,11 +35,14 @@
     },
     "f5Size": {
       "type": "string",
-      "defaultValue": "Standard_F2",
+      "defaultValue": "Standard_F2s",
       "allowedValues": [
-        "Standard_F2",
-        "Standard_A3",
-        "Standard_A4"
+        "Standard_DS2_v2",
+        "Standard_DS3_v2",
+        "Standard_DS4_v2",
+        "Standard_F2s",
+        "Standard_F4s",
+        "Standard_F8s"
       ],
       "metadata": {
         "description": "The size of the BIG-IP Instance."
