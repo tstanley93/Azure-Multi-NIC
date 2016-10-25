@@ -124,7 +124,15 @@
       "location": "[resourceGroup().location]",
       "properties": {
         "ipConfigurations": [
-          
+          {
+            "name": "ipconfig",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "[variables('subnet-idInternal')]"
+              }
+            }
+          }
         ]
       }
     }
