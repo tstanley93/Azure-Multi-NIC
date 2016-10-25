@@ -48,17 +48,6 @@
         "description": "The size of the BIG-IP Instance."
       }
     },
-    "multipleBIGIPs": {
-      "type": "string",
-      "defaultValue": "Yes",
-      "metadata": {
-        "description": "Do you want to deploy more than 1 BIG-IP so you can build a cluster?"
-      },
-      "allowedValues": [
-        "Yes",
-        "No"
-      ]
-    },
     "numberOFBIGIPs": {
       "type": "int",
       "defaultValue": 2,
@@ -70,17 +59,6 @@
         2,
         3,
         4
-      ]
-    },
-    "additionalInterfaces": {
-      "type": "string",
-      "defaultValue": "No",
-      "metadata": {
-        "description": "Do you want to deploy more than the default 2 interfaces?  Note: The total number of interfaces is dependant on the VM Instance Size that you have chosen."
-      },
-      "allowedValues": [
-        "Yes",
-        "No"
       ]
     },
     "numberOfAdditionalInterfaces": {
@@ -128,9 +106,14 @@
     "guiMgtID": "[concat(variables('lbID'),'/inboundNatRules/guimgt')]",
     "sshMgtID": "[concat(variables('lbID'),'/inboundNatRules/sshmgt')]",
     "templateLocationPrefix": "https://raw.githubusercontent.com/tstanley93/Azure-Multi-NIC/Multi-BIG-IP/Azure-Multi-NIC/Azure-Multi-NIC/",
-    "nicHash": {
-      "No": "[concat(variables('templateLocationPrefix'),'two_nicTemplate.json')]",
-      "Yes": "[concat(variables('templateLocationPrefix'),'multi_nicTemplate.json')]"
+    "nicHash": {      
+      "0": "[concat(variables('templateLocationPrefix'),'two_nicTemplate.json')]",
+      "1": "[concat(variables('templateLocationPrefix'),'multi_nicTemplate.json')]",
+      "2": "[concat(variables('templateLocationPrefix'),'multi_nicTemplate.json')]",
+      "3": "[concat(variables('templateLocationPrefix'),'multi_nicTemplate.json')]",
+      "4": "[concat(variables('templateLocationPrefix'),'multi_nicTemplate.json')]",
+      "5": "[concat(variables('templateLocationPrefix'),'multi_nicTemplate.json')]",
+      "6": "[concat(variables('templateLocationPrefix'),'multi_nicTemplate.json')]"
     },
     "bigipHash": {
       "0": "[concat(variables('templateLocationPrefix'),'two_nic_bigip_vm.json')]",

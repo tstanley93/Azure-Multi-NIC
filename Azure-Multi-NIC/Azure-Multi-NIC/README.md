@@ -28,18 +28,12 @@ This template will allow you to deploy more than one F5 BIG-IP into Azure with 2
 * f5Size
   * Required
   * The size of the BIG-IP Instance.
-* multipleBIGIPs
-  * Required
-  * If you want to deploy more than 1 BIG-IP so you can build a cluster, choose yes, if not choose no.
 * numberOFBIGIPs
   * Required
-  * The total number of BIG-IP's (Up to 4) you want to deploy. If you chose no from above, please select 1.
-* additionalInterfaces
-  * Required
-  * If you want to deploy more than the default 2 interfaces, select yes. Note: The total number of interfaces is dependant on the VM Instance Size that you have chosen.
+  * The total number of BIG-IP's (Up to 4) you want to deploy.
 * numberOfAdditionalInterfaces
   * Required
-  * By default two interfaces are deployed with this tempalte.  If the VM instance that you have chosen supports more than two NIC objects, you can specify the additional number of NIC's here.  So if you can have 4, you would specify 2 here.  Zero, means only 2 NIC's will be deployed.
+  * By default two interfaces are deployed with this template.  If the VM instance that you have chosen supports more than two NIC objects, you can specify the additional number of NIC's here.  For example if you can have 4, you would specify 2 here.  Zero, means only 2 NIC's will be deployed.
 * adminUsername
   * Required
   * User name to login to the BIG-IP.
