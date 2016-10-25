@@ -3,48 +3,22 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "vnetResourceGroupName": {
-      "type": "string",
-      "metadata": {
-        "description": "The Resource Group Name that contains the Virtual Network that will be external."
-      }
+      "type": "string"
     },
     "vnetName": {
-      "type": "string",
-      "metadata": {
-        "description": "The Name of the existing virtual network that you want to connect the BIG-IP's to."
-      }
+      "type": "string"
     },
     "externalSubnetName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of first subnet - with External Acccess to Internet."
-      }
+      "type": "string"
     },
     "internalSubnetName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of internal Subnet for UDR, NOT the subnet with the Servers in it."
-      }
+      "type": "string"
     },
     "f5Name": {
-      "type": "string",
-      "defaultValue": "bigip",
-      "metadata": {
-        "description": "The Unique Name of the BIG-IP instance, that will be used for the Public DNS Name of the Public IP."
-      }
+      "type": "string"
     },
     "numberOFBIGIPs": {
-      "type": "int",
-      "defaultValue": 2,
-      "metadata": {
-        "description": "The total number of BIG-IP's (Up to 4) you want to deploy."
-      },
-      "allowedValues": [
-        1,
-        2,
-        3,
-        4
-      ]
+      "type": "int"
     },
     "numberOfAdditionalInterfaces": {
       "type": "string"

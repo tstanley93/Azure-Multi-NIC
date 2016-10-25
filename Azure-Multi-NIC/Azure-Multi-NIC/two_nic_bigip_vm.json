@@ -3,48 +3,19 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "f5Name": {
-      "type": "string",
-      "defaultValue": "bigip",
-      "metadata": {
-        "description": "The Unique Name of the BIG-IP instance, that will be used for the Public DNS Name of the Public IP."
-      }
+      "type": "string"
     },
     "f5Size": {
-      "type": "string",
-      "defaultValue": "Standard_F2",
-      "allowedValues": [
-        "Standard_F2",
-        "Standard_A3",
-        "Standard_A4"
-      ],
-      "metadata": {
-        "description": "The size of the BIG-IP Instance."
-      }
+      "type": "string"
     },
     "numberOFBIGIPs": {
-      "type": "int",
-      "defaultValue": 2,
-      "metadata": {
-        "description": "The total number of BIG-IP's (Up to 4) you want to deploy. If you chose no from above, please select 1."
-      },
-      "allowedValues": [
-        1,
-        2,
-        3,
-        4
-      ]
+      "type": "int"
     },
     "adminUsername": {
-      "type": "string",
-      "metadata": {
-        "description": "User name to login to the BIG-IP."
-      }
+      "type": "string"
     },
     "adminPassword": {
-      "type": "securestring",
-      "metadata": {
-        "description": "The password to login to the BIG-IP"
-      }
+      "type": "securestring"
     }
   },
   "variables": {
