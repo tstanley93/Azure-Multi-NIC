@@ -25,6 +25,9 @@ This template will allow you to deploy more than one F5 BIG-IP into Azure with 2
 * f5Name
   * Required
   * The Unique Name of the BIG-IP instance, that will be used for the Public DNS Name of the Public IP.
+* f5SKU
+  * Required
+  * Choose the SKU of F5 BIG-IP you wish to deploy.  Good, Better, Best
 * f5Size
   * Required
   * The size of the BIG-IP Instance.
