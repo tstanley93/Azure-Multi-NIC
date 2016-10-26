@@ -129,7 +129,7 @@
         "displayName": "Additional NIC 0"
       },
       "copy": {
-        "count": "[mul(variables('intAddInterfaces'),variables('intAddBigIPs'))]",
+        "count": "[variables('intAddBigIPs')]",
         "name": "niccopy"
       },
       "type": "Microsoft.Network/networkInterfaces",
@@ -155,7 +155,7 @@
         "displayName": "Additional NIC 1"
       },
       "copy": {
-        "count": "[mul(variables('intAddInterfaces'),variables('intAddBigIPs'))]",
+        "count": "[variables('intAddBigIPs')]",
         "name": "niccopy"
       },
       "type": "Microsoft.Network/networkInterfaces",
@@ -181,7 +181,7 @@
         "displayName": "Additional NIC 2"
       },
       "copy": {
-        "count": "[mul(variables('intAddInterfaces'),variables('intAddBigIPs'))]",
+        "count": "[variables('intAddBigIPs')]",
         "name": "niccopy"
       },
       "type": "Microsoft.Network/networkInterfaces",
@@ -207,7 +207,7 @@
         "displayName": "Additional NIC 3"
       },
       "copy": {
-        "count": "[mul(variables('intAddInterfaces'),variables('intAddBigIPs'))]",
+        "count": "[variables('intAddBigIPs')]",
         "name": "niccopy"
       },
       "type": "Microsoft.Network/networkInterfaces",
