@@ -30,11 +30,9 @@
     <None Include="seven_nic_bigip_vm.json" />
     <None Include="six_nic_bigip_vm.json" />
     <None Include="five_nic_bigip_vm.json" />
-    <None Include="multi_nicTemplate.json" />
     <None Include="four_nic_bigip_vm.json" />
     <None Include="three_nic_bigip_vm.json" />
     <None Include="two_nic_bigip_vm.json" />
-    <None Include="two_nicTemplate.json" />
     <None Include="Deployment.targets">
       <Visible>False</Visible>
     </None>

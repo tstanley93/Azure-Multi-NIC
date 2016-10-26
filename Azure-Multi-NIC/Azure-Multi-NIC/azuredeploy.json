@@ -33,6 +33,18 @@
         "description": "The Unique Name of the BIG-IP instance, that will be used for the Public DNS Name of the Public IP."
       }
     },
+    "f5SKU": {
+      "type": "string",
+      "defaultValue": "Best",
+      "allowedValues": [
+        "Good",
+        "Better",
+        "Best"
+      ],
+      "metadata": {
+        "description": "Choose the SKU of F5 BIG-IP you wish to deploy.  Good, Better, Best"
+      }
+    },
     "f5Size": {
       "type": "string",
       "defaultValue": "Standard_F2s",
@@ -105,16 +117,12 @@
     "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/loadBalancerFrontEnd')]",
     "guiMgtID": "[concat(variables('lbID'),'/inboundNatRules/guimgt')]",
     "sshMgtID": "[concat(variables('lbID'),'/inboundNatRules/sshmgt')]",
-    "templateLocationPrefix": "https://raw.githubusercontent.com/tstanley93/Azure-Multi-NIC/Multi-BIG-IP/Azure-Multi-NIC/Azure-Multi-NIC/",
-    "nicHash": {      
-      "0": "[concat(variables('templateLocationPrefix'),'two_nicTemplate.json')]",
-      "1": "[concat(variables('templateLocationPrefix'),'multi_nicTemplate.json')]",
-      "2": "[concat(variables('templateLocationPrefix'),'multi_nicTemplate.json')]",
-      "3": "[concat(variables('templateLocationPrefix'),'multi_nicTemplate.json')]",
-      "4": "[concat(variables('templateLocationPrefix'),'multi_nicTemplate.json')]",
-      "5": "[concat(variables('templateLocationPrefix'),'multi_nicTemplate.json')]",
-      "6": "[concat(variables('templateLocationPrefix'),'multi_nicTemplate.json')]"
+    "skuHash": {
+      "Good": "f5-bigip-virtual-edition-good-byol",
+      "Better": "f5-bigip-virtual-edition-better-byol",
+      "Best": "f5-bigip-virtual-edition-best-byol"
     },
+    "templateLocationPrefix": "https://raw.githubusercontent.com/tstanley93/Azure-Multi-NIC/Multi-BIG-IP/Azure-Multi-NIC/Azure-Multi-NIC/",
     "bigipHash": {
       "0": "[concat(variables('templateLocationPrefix'),'two_nic_bigip_vm.json')]",
       "1": "[concat(variables('templateLocationPrefix'),'three_nic_bigip_vm.json')]",
@@ -304,36 +312,9 @@
     },
     {
       "apiVersion": "2015-01-01",
-      "name": "NICTemplate",
-      "type": "Microsoft.Resources/deployments",
-      "dependsOn": [
-        "[concat('Microsoft.Resources/deployments/','InboundNATRuleTemplate')]",
-        "[concat('Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]",
-        "[concat('Microsoft.Compute/availabilitySets/', variables('avsetNamePrefix'))]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('nicHash')[parameters('numberOfAdditionalInterfaces')]]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "vnetResourceGroupName": { "value": "[toLower(parameters('vnetResourceGroupName'))]" },
-          "vnetName": { "value": "[parameters('vnetName')]" },
-          "externalSubnetName": { "value": "[parameters('externalSubnetName')]" },
-          "internalSubnetName": { "value": "[parameters('internalSubnetName')]" },
-          "f5Name": { "value": "[parameters('f5Name')]" },
-          "numberOFBIGIPs": { "value": "[parameters('numberOFBIGIPs')]" },
-          "numberOfAdditionalInterfaces": { "value": "[parameters('numberOfAdditionalInterfaces')]" }
-        }
-      }
-    },
-    {
-      "apiVersion": "2015-01-01",
       "name": "BIGIPTemplate",
       "type": "Microsoft.Resources/deployments",
       "dependsOn": [
-        "[concat('Microsoft.Resources/deployments/','NICTemplate')]",
         "[concat('Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]",
         "[concat('Microsoft.Compute/availabilitySets/', variables('avsetNamePrefix'))]"
       ],
@@ -348,7 +329,13 @@
           "f5Size": { "value": "[parameters('f5Size')]" },
           "numberOFBIGIPs": { "value": "[parameters('numberOFBIGIPs')]" },
           "adminUsername": { "value": "[parameters('adminUsername')]" },
-          "adminPassword": { "value": "[parameters('adminPassword')]" }
+          "adminPassword": { "value": "[parameters('adminPassword')]" },
+          "f5SKU": { "value": "[variables('skuHash')[parameters('f5SKU')]]" },
+          "vnetResourceGroupName": { "value": "[toLower(parameters('vnetResourceGroupName'))]" },
+          "vnetName": { "value": "[parameters('vnetName')]" },
+          "externalSubnetName": { "value": "[parameters('externalSubnetName')]" },
+          "internalSubnetName": { "value": "[parameters('internalSubnetName')]" },
+          "numberOfAdditionalInterfaces": { "value": "[parameters('numberOfAdditionalInterfaces')]" }
         }
       }
     }
