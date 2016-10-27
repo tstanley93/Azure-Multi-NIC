@@ -156,7 +156,7 @@
       "location": "[resourceGroup().location]",
       "apiVersion": "2015-05-01-preview",
       "properties": {
-        "accountType": "Standard_LRS"
+        "accountType": "Premium_LRS"
       }
     },
     {
