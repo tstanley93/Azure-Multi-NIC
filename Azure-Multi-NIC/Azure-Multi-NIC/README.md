@@ -53,7 +53,8 @@ This template will allow you to deploy more than one F5 BIG-IP into Azure with 2
 
 This template will deploy the following inside of either a new resource group or an existing one depending on what you select;
 
-* Storage Container
+* Premium Storage Container for the BIG-IP's
+* Standard Storage Container for boot diagnostics.
 * Public IP Address
 * NIC objects for the F5 BIG-IP VM.
 * F5 BIG-IP Virtual Machine
