@@ -37,6 +37,9 @@ This template will allow you to deploy more than one F5 BIG-IP into Azure with 2
 * numberOfAdditionalInterfaces
   * Required
   * By default two interfaces are deployed with this template.  If the VM instance that you have chosen supports more than two NIC objects, you can specify the additional number of NIC's here.  For example if you can have 4, you would specify 2 here.  Zero, means only 2 NIC's will be deployed.
+* additionalSubnets
+  * Required
+  * A semi-colon delimited string of subnets, one for each of the additional interfaces. If zero, leave this field blank, if one enter a single subnet, if two type two subnet names separated by a semi-colon.  Exmaple subnet3;subnet4.
 * adminUsername
   * Required
   * User name to login to the BIG-IP.
@@ -56,7 +59,7 @@ This template will deploy the following inside of either a new resource group or
 * F5 BIG-IP Virtual Machine
 
 ### During Deployment
-During Deployment there are “TWO” references to a resource group.  One is:
+During Deployment there are ï¿½TWOï¿½ references to a resource group.  One is:
  
 <img src="https://raw.githubusercontent.com/tstanley93/Azure-Multi-NIC/master/Azure-Multi-NIC/Azure-Multi-NIC/rg_01.jpg" />
 
