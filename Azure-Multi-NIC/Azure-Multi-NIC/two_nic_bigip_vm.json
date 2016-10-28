@@ -34,6 +34,9 @@
     },
     "numberOfAdditionalInterfaces": {
       "type": "string"
+    },
+    "additionalSubnets": {
+      "type": "string"
     }
   },
   "variables": {
@@ -46,8 +49,7 @@
     "subnet-idInternal": "[concat(variables('vnetID'),'/subnets/',parameters('internalSubnetName'))]",
     "nsgID": "[resourceId('Microsoft.Network/networkSecurityGroups/',concat(parameters('f5Name'),'-nsg'))]",
     "loadBalancerName": "[concat(parameters('f5Name'),'-ALB')]",
-    "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]",
-    "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/loadBalancerFrontEnd')]"
+    "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]"
   },
   "resources": [
     {

@@ -89,6 +89,13 @@
         "6"
       ]
     },
+    "additionalSubnets":{
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "A semi-colon delimited string of subnets, one for each of the additional interfaces. If zero, leave this field blank, if one enter a single subnet, if two type two subnet names separated by a semi-colon.  Exmaple subnet3;subnet4"
+      }
+    },
     "adminUsername": {
       "type": "string",
       "metadata": {
@@ -103,20 +110,11 @@
     }
   },
   "variables": {
-    "vnetID": "[resourceId(parameters('vnetResourceGroupName'),'Microsoft.Network/virtualNetworks',parameters('vnetName'))]",
-    "subnet-idExternal": "[concat(variables('vnetID'),'/subnets/',parameters('externalSubnetName'))]",
-    "subnet-idInternal": "[concat(variables('vnetID'),'/subnets/',parameters('internalSubnetName'))]",
     "avsetNamePrefix": "[concat(parameters('f5Name'),'-avset')]",
-    "externalNICNamePrefix": "[concat(parameters('f5Name'),'-externalnic')]",
-    "udrNICNamePrefix": "[concat(parameters('f5Name'),'-udrnic')]",
     "f5publicIPName": "[concat(parameters('f5Name'),'-IP')]",
     "loadBalancerName": "[concat(parameters('f5Name'),'-ALB')]",
     "newStorageAccountName": "[concat(parameters('f5Name'),'store')]",
-    "publicIPID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('f5publicIPName'))]",    
-    "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]",
-    "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/loadBalancerFrontEnd')]",
-    "guiMgtID": "[concat(variables('lbID'),'/inboundNatRules/guimgt')]",
-    "sshMgtID": "[concat(variables('lbID'),'/inboundNatRules/sshmgt')]",
+    "publicIPID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('f5publicIPName'))]",
     "skuHash": {
       "Good": "f5-bigip-virtual-edition-good-byol",
       "Better": "f5-bigip-virtual-edition-better-byol",
@@ -257,7 +255,7 @@
         ],
         "loadBalancingRules": [
           {
-            "Name": "lbrule",
+            "name": "lbrule",
             "properties": {
               "frontendIPConfiguration": {
                 "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/frontendIpConfigurations/loadBalancerFrontEnd')]"
@@ -336,7 +334,8 @@
           "vnetName": { "value": "[parameters('vnetName')]" },
           "externalSubnetName": { "value": "[parameters('externalSubnetName')]" },
           "internalSubnetName": { "value": "[parameters('internalSubnetName')]" },
-          "numberOfAdditionalInterfaces": { "value": "[parameters('numberOfAdditionalInterfaces')]" }
+          "numberOfAdditionalInterfaces": { "value": "[parameters('numberOfAdditionalInterfaces')]" },
+          "additionalSubnets": { "value": "[parameters('additionalSubnets')]"}
         }
       }
     }
