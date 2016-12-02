@@ -352,12 +352,6 @@
               }
             }
           ]
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-            "enabled": true,
-            "storageUri": "[concat('http://',variables('newstorageAccountName'),'.blob.core.windows.net')]"
-          }
         }
       }
     }
