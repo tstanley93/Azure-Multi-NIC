@@ -66,11 +66,7 @@ This template will deploy the following inside of either a new resource group or
 * F5 BIG-IP Virtual Machine
 
 ### During Deployment
-<<<<<<< HEAD
-During Deployment there are �TWO� references to a resource group.  One is:
-=======
 During Deployment there are “TWO” references to a resource group.  One is:
->>>>>>> origin/master
  
 ![rg_01](rg_01.jpg)
 
@@ -86,8 +82,4 @@ This is where you specify the name of the resource group that contains the Virtu
 
 ### How to connect to your Multi-NIC BIG-IP's to manage them:
 
-<<<<<<< HEAD
-After the deployment successfuly finishes, you can find the BIG-IP Management UI\SSH URLs by doing the following;  Find the resource group that was deployed, which is the same name as the "f5name".  When you click on this object you will see the deployment status.  Click on the deployment status, and then the deployment.  In the "Outputs" section you will find the URL's and ports that you can use to connect to the F5 BIG-IP. 
-=======
-After the deployment successfuly finishes, you can find the BIG-IP Management UI\SSH URLs by doing the following;  Find the resource group that was deployed, which is the same name as the "dnsNameForPublicIP".  When you click on this object you will see the deployment status.  Click on the deployment status, and then the deployment.  In the "Outputs" section you will find the URL's and ports that you can use to connect to the F5 BIG-IP. 
->>>>>>> origin/master
+After the deployment successfuly finishes, you can find the BIG-IP Management UI\SSH URLs by doing the following;  Find the resource group that was deployed, which is the same name as the "f5name".  When you click on this object you will see the deployment status.  Click on the deployment status, and then the deployment.  In the "Outputs" section you will find the URL's and ports that you can use to connect to the F5 BIG-IP.
