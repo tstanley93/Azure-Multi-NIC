@@ -1,13 +1,13 @@
-[![Releases](https://img.shields.io/github/release/f5devcentral/f5-azure-multi-nic.svg)](https://github.com/f5devcentral/f5-azure-multi-nic/releases)
-[![Commits](https://img.shields.io/github/commits-since/f5devcentral/f5-azure-multi-nic/v1.0.svg)](https://github.com/f5devcentral/f5-azure-multi-nic/commits/multiple-bigips)
-[![Issues](https://img.shields.io/github/issues/f5devcentral/f5-azure-multi-nic.svg)](https://github.com/f5devcentral/f5-azure-multi-nic/issues)
-[![TMOS Version](https://img.shields.io/badge/tmos--version-12.1-ff0000.svg)](https://github.com/f5devcentral/f5-azure-multi-nic/tree/multiple-bigips)
+[![Releases](https://img.shields.io/github/release/tstanley93/Azure-Multi-NIC.svg)](https://github.com/tstanley93/Azure-Multi-NIC/releases)
+[![Commits](https://img.shields.io/github/commits-since/tstanley93/Azure-Multi-NIC/v1.0.svg)](https://github.com/tstanley93/Azure-Multi-NIC/commits/master)
+[![Issues](https://img.shields.io/github/issues/f5devcentral/f5-azure-multi-nic.svg)](https://github.com/tstanley93/Azure-Multi-NIC/issues)
+[![TMOS Version](https://img.shields.io/badge/tmos--version-12.1-ff0000.svg)](https://github.com/tstanley93/Azure-Multi-NIC/tree/master)
 
 
 # Azure Mulit-NIC BIG-IP
 Deploy a Multi-NIC BIG-IP into Azure  
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftstanley93%2FAzure-Multi-NIC%2FMulti-BIG-IP%2FAzure-Multi-NIC%2FAzure-Multi-NIC%2Fazuredeploy.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftstanley93%2FAzure-Multi-NIC%2Fmaster%2FAzure-Multi-NIC%2FAzure-Multi-NIC%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
